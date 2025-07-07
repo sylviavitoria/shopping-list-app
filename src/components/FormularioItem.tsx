@@ -12,7 +12,7 @@ export function FormularioItem({ onAdicionar }: FormularioItemProps) {
   const [textoNovoItem, setTextoNovoItem] = useState('');
   const [categoriaSelecionada, setCategoriaSelecionada] = useState<CategoriaCompra>('Outros');
 
-  const categorias: CategoriaCompra[] = ['Hortifruti', 'Bebidas', 'Limpeza', 'Laticínios', 'Carnes', 'Outros'];
+  const categorias: CategoriaCompra[] = ['Hortifruti', 'Bebidas', 'Limpeza', 'Laticínios', 'Alimentos','Higiene', 'Outros'];
 
   const adicionarItem = async () => {
     if (textoNovoItem.trim()) {
