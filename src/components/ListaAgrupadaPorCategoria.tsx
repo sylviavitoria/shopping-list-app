@@ -1,19 +1,19 @@
 import React from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
-import { ItemLista } from '../components/ItemLista';
-import { useShoppingList } from '../hooks/useShoppingList';
 import { ShoppingItem } from '../models/ShoppingItem';
+import { ItemLista } from './ItemLista';
 
 interface ListaAgrupadaPorCategoriaProps {
+  itens: ShoppingItem[];
   onToggleConclusao: (id: string) => void;
   onRemover: (id: string) => void;
 }
 
 export function ListaAgrupadaPorCategoria({ 
+  itens,
   onToggleConclusao, 
   onRemover 
 }: ListaAgrupadaPorCategoriaProps) {
-  const { itens, loading, error } = useShoppingList();
   
   const secoesPorCategoria = React.useMemo(() => {
     const categorizados: Record<string, ShoppingItem[]> = {};
@@ -32,7 +32,7 @@ export function ListaAgrupadaPorCategoria({
     }));
   }, [itens]);
   
-  if (loading || error || itens.length === 0) {
+  if (itens.length === 0) {
     return null;
   }
   
