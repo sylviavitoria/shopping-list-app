@@ -26,7 +26,7 @@ export function ListaAgrupadaPorCategoria({
       categorizados[categoria].push(item);
     });
     
-    return Object.keys(categorizados).map(categoria => ({
+    return Object.keys(categorizados).sort().map(categoria => ({
       titulo: categoria,
       data: categorizados[categoria]
     }));

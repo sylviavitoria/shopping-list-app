@@ -12,7 +12,7 @@ export function FormularioItem({ onAdicionar }: FormularioItemProps) {
   const [textoNovoItem, setTextoNovoItem] = useState('');
   const [categoriaSelecionada, setCategoriaSelecionada] = useState<CategoriaCompra>('Outros');
 
-  const categorias: CategoriaCompra[] = ['Hortifruti', 'Bebidas', 'Limpeza', 'Laticínios', 'Alimentos','Higiene', 'Outros'];
+  const categorias: CategoriaCompra[] = ['Hortifruti', 'Bebidas', 'Limpeza', 'Laticínios', 'Alimentos', 'Higiene', 'Outros'].sort();
 
   const adicionarItem = async () => {
     if (textoNovoItem.trim()) {
@@ -30,7 +30,11 @@ export function FormularioItem({ onAdicionar }: FormularioItemProps) {
           value={textoNovoItem}
           onChangeText={setTextoNovoItem}
         />
-        <TouchableOpacity style={styles.botaoAdicionar} onPress={adicionarItem}>
+        <TouchableOpacity
+          style={styles.botaoAdicionar}
+          onPress={adicionarItem}
+          testID="botao-adicionar"
+        >
           <Ionicons name="add" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
   },
   labelCategoria: {
     fontSize: 14,
-    color: '#666',
+    color: '#999',
     marginBottom: 8,
     fontWeight: '500',
   },

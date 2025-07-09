@@ -16,7 +16,10 @@ export class CompartilharService {
 
       let mensagem = 'Minha Lista de Compras:\n\n';
       
-      Object.entries(itensPorCategoria).forEach(([categoria, itensCategoria]) => {
+      const categoriasOrdenadas = Object.keys(itensPorCategoria).sort();
+      
+      categoriasOrdenadas.forEach(categoria => {
+        const itensCategoria = itensPorCategoria[categoria];
         mensagem += `${categoria}\n`;
         
         itensCategoria.forEach(item => {
