@@ -1,13 +1,12 @@
 import '@testing-library/react-native';
 import 'react-native-gesture-handler/jestSetup';
 
-jest.mock('@expo/vector-icons', () => ({
-  Ionicons: 'Ionicons',
-  MaterialIcons: 'MaterialIcons',
-  FontAwesome: 'FontAwesome',
+jest.mock('firebase/app', () => ({
+  initializeApp: jest.fn(),
 }));
 
 jest.mock('firebase/firestore', () => ({
+  getFirestore: jest.fn(),
   collection: jest.fn(),
   getDocs: jest.fn(),
   addDoc: jest.fn(),
@@ -19,7 +18,12 @@ jest.mock('firebase/firestore', () => ({
   where: jest.fn(),
   orderBy: jest.fn(),
   serverTimestamp: jest.fn(() => new Date()),
-  getFirestore: jest.fn(),
+}));
+
+jest.mock('@expo/vector-icons', () => ({
+  Ionicons: 'Ionicons',
+  MaterialIcons: 'MaterialIcons',
+  FontAwesome: 'FontAwesome',
 }));
 
 jest.mock('react-native', () => {
