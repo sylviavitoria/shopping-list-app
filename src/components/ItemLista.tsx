@@ -16,11 +16,12 @@ export function ItemLista({ item, onToggleConclusao, onRemover }: ItemListaProps
       <TouchableOpacity 
         style={styles.checkbox}
         onPress={() => onToggleConclusao(item.id)}
+        testID={`checkbox-${item.id}`}
       >
         {item.concluido ? (
           <Ionicons name="checkbox" size={24} color="#4CAF50" />
         ) : (
-          <Ionicons name="square-outline" size={24} color="#666" />
+          <Ionicons name="square-outline" size={24} color="#999" />
         )}
       </TouchableOpacity>
       
@@ -34,16 +35,24 @@ export function ItemLista({ item, onToggleConclusao, onRemover }: ItemListaProps
           {item.nome}
         </Text>
         
-        {item.categoria && item.categoria !== 'Outros' && (
-          <Text style={styles.textoCategoria}>
-            {item.categoria}
-          </Text>
-        )}
+        <View style={styles.infoAdicional}>
+          {item.categoria && item.categoria !== 'Outros' && (
+            <Text style={styles.textoCategoria}>
+              {item.categoria}
+            </Text>
+          )}
+          {item.dataCriacao && (
+            <Text style={styles.textoData}>
+              {new Date(item.dataCriacao).toLocaleDateString('pt-BR')}
+            </Text>
+          )}
+        </View>
       </View>
       
       <TouchableOpacity 
         style={styles.botaoExcluir}
         onPress={() => onRemover(item.id)}
+        testID={`botao-excluir-${item.id}`}
       >
         <Ionicons name="trash-outline" size={24} color="#FF5252" />
       </TouchableOpacity>
@@ -82,6 +91,15 @@ const styles = StyleSheet.create({
   textoCategoria: {
     fontSize: 12,
     color: '#777',
+    marginTop: 2,
+  },
+  textoData: {
+    fontSize: 11,
+    color: '#999',
+    marginTop: 2,
+    fontStyle: 'italic',
+  },
+  infoAdicional: {
     marginTop: 4,
   },
   botaoExcluir: {
