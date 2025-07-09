@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   textoBotao: {
     fontSize: 14,
-    color: '#666',
+    color: '#999',
     fontWeight: '500',
   },
   textoAtivo: {
