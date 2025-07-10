@@ -22,7 +22,7 @@ export function FormularioItem({ onAdicionar }: FormularioItemProps) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="formulario-item">
       <View style={styles.containerInput}>
         <TextInput
           style={styles.input}
