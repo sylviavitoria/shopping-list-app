@@ -18,8 +18,8 @@ export function EstadoLista({
 }: EstadoListaProps) {
   if (loading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#4CAF50" />
+      <View style={styles.container} testID="estado-container">
+        <ActivityIndicator size="large" color="#4CAF50"  testID="loading-indicator"/>
         <Text style={styles.textoVazio}>Carregando itens...</Text>
       </View>
     );
@@ -28,7 +28,7 @@ export function EstadoLista({
   if (error) {
     return (
       <View style={styles.container}>
-        <Ionicons name="alert-circle-outline" size={64} color="#FF5252" />
+        <Ionicons name="alert-circle-outline" size={64} color="#FF5252"testID="error-icon" />
         <Text style={styles.textoVazio}>{error}</Text>
         {onRecarregar && (
           <TouchableOpacity style={styles.botaoTentar} onPress={onRecarregar}>
@@ -42,7 +42,7 @@ export function EstadoLista({
   if (listaVazia) {
     return (
       <View style={styles.container}>
-        <Ionicons name="basket-outline" size={64} color="#ccc" />
+        <Ionicons name="basket-outline" size={64} color="#ccc" testID="empty-basket-icon" />
         <Text style={styles.textoVazio}>Sua lista está vazia</Text>
         <Text style={styles.subtextoVazio}>Adicione itens para começar</Text>
       </View>
