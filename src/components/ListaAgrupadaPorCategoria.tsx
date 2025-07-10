@@ -38,6 +38,7 @@ export function ListaAgrupadaPorCategoria({
   
   return (
     <SectionList
+      testID="section-list"
       sections={secoesPorCategoria}
       keyExtractor={(item) => item.id}
       style={styles.lista}
