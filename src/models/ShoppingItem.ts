@@ -20,4 +20,4 @@ export interface ShoppingItemResponse {
   dataCriacao: Date | string;
 }
 
-export type CategoriaCompra = 'Hortifruti' | 'Bebidas' | 'Limpeza' | 'Laticínios' | 'Carnes' | 'Outros';
+export type CategoriaCompra = 'Hortifruti' | 'Bebidas' | 'Limpeza' | 'Laticínios' | 'Alimentos' |'Higiene' | 'Outros';

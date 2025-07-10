@@ -20,7 +20,11 @@ export function Header({
   return (
     <View style={styles.container}>
       {mostrarBotaoVoltar ? (
-        <TouchableOpacity onPress={acaoVoltar} style={styles.botaoVoltar}>
+        <TouchableOpacity 
+          onPress={acaoVoltar} 
+          style={styles.botaoVoltar}
+          testID="botao-voltar"
+        >
           <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
       ) : <View style={styles.espacoVazio} />}
@@ -28,7 +32,11 @@ export function Header({
       <Text style={styles.titulo}>{titulo}</Text>
       
       {iconeDireito ? (
-        <TouchableOpacity onPress={acaoDireita} style={styles.botaoDireito}>
+        <TouchableOpacity 
+          onPress={acaoDireita} 
+          style={styles.botaoDireito}
+          testID="botao-direito"
+        >
           <Ionicons name={iconeDireito as any} size={24} color="#333" />
         </TouchableOpacity>
       ) : <View style={styles.espacoVazio} />}
