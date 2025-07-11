@@ -47,7 +47,7 @@ Um aplicativo mobile de lista de compras desenvolvido com React Native e Expo, c
 
 Abaixo esta a imagem que ilustra o layout e o funcionamento da aplicação.
 
-<img src="https://github.com/user-attachments/assets/403356de-11ea-4512-a8eb-262fe0b15887" alt="Lista de compras" width="300"/>
+<img src="https://github.com/user-attachments/assets/78477f76-0e9a-40c0-bcc6-8ab2c7811712" alt="Lista de compras" width="300"/>
 
 ---
 
