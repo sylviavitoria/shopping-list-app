@@ -57,24 +57,27 @@ O projeto segue o padrão **MVVM** de forma bem definida:
 
 ```
 src/
-├── models/                    # MODEL LAYER
+├── models/                   # MODEL LAYER
 │   └── ShoppingItem.ts       # Definições de tipos e interfaces
-├── service/                   # SERVICE LAYER (parte do Model)
-│   ├── shoppingItemService.ts # Serviços de dados
-│   ├── CompartilharService.ts # Serviços de compartilhamento
-│   └── config/
-│       └── firebase.ts       # Configuração do Firebase
-├── hooks/                     # VIEWMODEL LAYER
+│
+├── assets/images             # Pastas de imagens
+│  
+├── hooks/                    # VIEWMODEL LAYER
 │   └── useShoppingList.ts    # Lógica de negócio e estado
-├── components/                # VIEW LAYER
+├── components/               # VIEW LAYER
 │   ├── EstadoLista.tsx       # Estado da lista (loading, erro, vazio)
 │   ├── FiltroLista.tsx       # Filtros de visualização
 │   ├── FormularioItem.tsx    # Formulário de adição
 │   ├── Header.tsx            # Cabeçalho
 │   ├── ItemLista.tsx         # Item individual da lista
 │   └── ListaAgrupadaPorCategoria.tsx # Lista agrupada
-└── pages/                     # VIEW LAYER
-    └── Home.tsx              # Tela principal
+├── pages/                    # VIEW LAYER
+│     └── Home.tsx            # Tela principal
+├── service/                   # SERVICE LAYER (parte do Model)
+│   ├── shoppingItemService.ts # Serviços de dados
+│   ├── CompartilharService.ts # Serviços de compartilhamento
+│   └── config/
+│       └── firebase.ts       # Configuração do Firebase
 ```
 
 ### 📂 Responsabilidades por Camada
