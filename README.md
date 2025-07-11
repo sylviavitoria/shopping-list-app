@@ -248,7 +248,7 @@ eas build -p android --profile preview
 ```
 
 #### 3. Aguarde o build ser concluído
-- O processo pode levar de 10-20 minutos  
+- O processo pode levar de alguns minutos  
 - O APK ficará disponível na sua conta expo.dev
 
 #### 4. Acesse o APK gerado
