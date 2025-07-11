@@ -16,7 +16,9 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.sylviavitoria.shoopinglistapp",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +44,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "root": "./src/app"
+      },
+      "eas": {
+        "projectId": "381eea74-0af4-403f-9fb3-d5424bcc8d32"
+      }
     }
   }
 }
