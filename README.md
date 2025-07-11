@@ -19,26 +19,26 @@ Um aplicativo mobile de lista de compras desenvolvido com React Native e Expo, c
 
 ### Frontend
 
-- **React Native** (0.79.5) – Framework para desenvolvimento mobile  
-- **Expo** (53.0.17) – Plataforma de desenvolvimento e deployment  
+- **React Native** – Framework para desenvolvimento mobile  
+- **Expo** – Plataforma de desenvolvimento e deployment  
 - **TypeScript** – Tipagem estática  
-- **Expo Router** (5.1.3) – Navegação baseada em sistema de arquivos  
+- **Expo Router** – Navegação baseada em sistema de arquivos  
 
 ### Backend & Database
 
-- **Firebase** (11.10.0) – Backend as a Service  
+- **Firebase** – Backend as a Service  
 - **Firebase Firestore** – Banco de dados NoSQL em tempo real  
 
 ### UI/UX
 
-- **Expo Vector Icons** (14.1.0) – Ícones  
-- **React Native Gesture Handler** (2.24.0) – Gestos e interações  
-- **React Native Reanimated** (3.17.4) – Animações performáticas  
+- **Expo Vector Icons** – Ícones  
+- **React Native Gesture Handler** – Gestos e interações  
+- **React Native Reanimated** – Animações performáticas  
 
 ### Testes
 
 - **Jest** – Framework de testes  
-- **React Native Testing Library** (13.2.0) – Testes de componentes  
+- **React Native Testing Library** – Testes de componentes  
 - **Coverage Reports** – Relatórios de cobertura de testes  
 
 ---
