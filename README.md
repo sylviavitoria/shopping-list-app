@@ -240,7 +240,7 @@ npx expo start
 npm install -g eas-cli
 ```
 
-#### 2. Faça login na sua conta Expo
+#### 2. Faça login na sua conta Expo, caso não tenha feito
 ```bash
 eas login
 ```
