@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ShoppingItem, ShoppingItemRequest } from '../models/ShoppingItem';
 import { ShoppingItemService } from '../service/shoppingItemService';
 
@@ -82,9 +82,8 @@ export function useShoppingList() {
     }
   }
 
-  function obterItensPorCategoria() {
+  const obterItensPorCategoria = useMemo(() => {
     const categorizados: Record<string, ShoppingItem[]> = {};
-
     itens.forEach(item => {
       const categoria = item.categoria || 'Outros';
       if (!categorizados[categoria]) {
@@ -92,9 +91,9 @@ export function useShoppingList() {
       }
       categorizados[categoria].push(item);
     });
-
+    
     return categorizados;
-  }
+  }, [itens]);
 
   return {
     itens,

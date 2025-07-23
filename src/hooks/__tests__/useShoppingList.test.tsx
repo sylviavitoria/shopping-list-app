@@ -52,7 +52,7 @@ describe('useShoppingList Hook', () => {
     const promise = new Promise((resolve) => {
       resolvePromise = resolve;
     });
-    
+
     mockShoppingItemService.obterItens.mockReturnValue(promise as any);
 
     const { result } = renderHook(() => useShoppingList());
@@ -176,7 +176,7 @@ describe('useShoppingList Hook', () => {
     });
 
     expect(mockShoppingItemService.alternarConclusao).toHaveBeenCalledWith('1');
-    expect(mockShoppingItemService.obterItens).toHaveBeenCalledTimes(2); 
+    expect(mockShoppingItemService.obterItens).toHaveBeenCalledTimes(2);
   });
 
   it('deve lidar com erro ao alternar conclusão', async () => {
@@ -236,7 +236,7 @@ describe('useShoppingList Hook', () => {
       expect(result.current.itens).toEqual(mockItens);
     });
 
-    const itensPorCategoria = result.current.obterItensPorCategoria();
+    const itensPorCategoria = result.current.obterItensPorCategoria;
 
     expect(itensPorCategoria).toEqual({
       'Alimentos': [mockItens[0]],
@@ -258,7 +258,7 @@ describe('useShoppingList Hook', () => {
       expect(result.current.itens).toEqual(itensSemCategoria);
     });
 
-    const itensPorCategoria = result.current.obterItensPorCategoria();
+    const itensPorCategoria = result.current.obterItensPorCategoria;
 
     expect(itensPorCategoria).toEqual({
       'Outros': [itensSemCategoria[0]],
@@ -275,7 +275,7 @@ describe('useShoppingList Hook', () => {
       await result.current.carregarItens();
     });
 
-    expect(mockShoppingItemService.obterItens).toHaveBeenCalledTimes(2); 
+    expect(mockShoppingItemService.obterItens).toHaveBeenCalledTimes(2);
   });
 
   it('deve limpar erro ao executar operação com sucesso', async () => {
