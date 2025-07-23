@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { SectionList, Text, View } from 'react-native';
+import styles from '../components/styles/ListaAgrupadaPorCategoria.styles';
 import { ShoppingItem } from '../models/ShoppingItem';
 import { ItemLista } from './ItemLista';
 
@@ -57,22 +58,3 @@ export function ListaAgrupadaPorCategoria({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  lista: {
-    flex: 1,
-    paddingHorizontal: 16,
-  },
-  cabecalhoCategoria: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 5,
-    borderRadius: 8,
-  },
-  tituloCategoria: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#555',
-  },
-});

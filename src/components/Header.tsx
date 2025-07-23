@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import styles from '../components/styles/Header.styles';
 
 interface PropsHeader {
   titulo: string;
@@ -43,30 +44,3 @@ export function Header({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  titulo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  botaoVoltar: {
-    padding: 8,
-  },
-  botaoDireito: {
-    padding: 8,
-  },
-  espacoVazio: {
-    width: 40,
-  }
-});

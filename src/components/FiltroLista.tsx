@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import styles from '../components/styles/FiltroLista.styles';
 
 type FiltroTipo = 'todos' | 'pendentes' | 'concluidos';
 
@@ -17,14 +18,14 @@ export function FiltroLista({ filtroAtivo, onChangeFiltro }: FiltroListaProps) {
       >
         <Text style={[styles.textoBotao, filtroAtivo === 'todos' && styles.textoAtivo]}>Todos</Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.botaoFiltro, filtroAtivo === 'pendentes' && styles.botaoAtivo]}
         onPress={() => onChangeFiltro('pendentes')}
       >
         <Text style={[styles.textoBotao, filtroAtivo === 'pendentes' && styles.textoAtivo]}>Pendentes</Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.botaoFiltro, filtroAtivo === 'concluidos' && styles.botaoAtivo]}
         onPress={() => onChangeFiltro('concluidos')}
@@ -34,31 +35,3 @@ export function FiltroLista({ filtroAtivo, onChangeFiltro }: FiltroListaProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    marginHorizontal: 16,
-    marginBottom: 10,
-  },
-  botaoFiltro: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    marginHorizontal: 4,
-    backgroundColor: '#f0f0f0',
-  },
-  botaoAtivo: {
-    backgroundColor: '#4CAF50',
-  },
-  textoBotao: {
-    fontSize: 14,
-    color: '#999',
-    fontWeight: '500',
-  },
-  textoAtivo: {
-    color: '#fff',
-  },
-});
