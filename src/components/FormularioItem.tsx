@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../components/styles/FormularioItem.styles';
-import { CategoriaCompra } from '../models/ShoppingItem';
+import { CATEGORIAS_COMPRA, CategoriaCompra } from '../constants/categorias';
 
 interface FormularioItemProps {
   onAdicionar: (nome: string, categoria: CategoriaCompra) => Promise<void>;
@@ -13,7 +13,7 @@ export function FormularioItem({ onAdicionar }: FormularioItemProps) {
   const [textoNovoItem, setTextoNovoItem] = useState('');
   const [categoriaSelecionada, setCategoriaSelecionada] = useState<CategoriaCompra>('Outros');
 
-  const categorias: CategoriaCompra[] = ['Hortifruti', 'Bebidas', 'Limpeza', 'Laticínios', 'Alimentos', 'Higiene', 'Outros'].sort();
+  const categorias = [...CATEGORIAS_COMPRA].sort();
 
   const adicionarItem = async () => {
     if (textoNovoItem.trim()) {

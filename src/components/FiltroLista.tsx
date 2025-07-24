@@ -1,9 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from '../components/styles/FiltroLista.styles';
-
-type FiltroTipo = 'todos' | 'pendentes' | 'concluidos';
-
+import { FiltroTipo } from '../constants/filtros';
 interface FiltroListaProps {
   filtroAtivo: FiltroTipo;
   onChangeFiltro: (filtro: FiltroTipo) => void;
