@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View } from 'react-native';
 import { EstadoLista } from '../components/EstadoLista';
 import { FiltroLista } from '../components/FiltroLista';
 import { FormularioItem } from '../components/FormularioItem';
 import { Header } from '../components/Header';
 import { ListaAgrupadaPorCategoria } from '../components/ListaAgrupadaPorCategoria';
+import { FiltroTipo } from '../constants/filtros';
 import { useShoppingList } from '../hooks/useShoppingList';
-import { CategoriaCompra } from '../models/ShoppingItem';
 import { CompartilharService } from '../service/CompartilharService';
-
-type FiltroTipo = 'todos' | 'pendentes' | 'concluidos';
+import styles from './styles/Home.styles';
 
 export function Home() {
   const [filtroAtivo, setFiltroAtivo] = useState<FiltroTipo>('todos');
@@ -18,13 +17,13 @@ export function Home() {
     itens,
     loading,
     error,
-    adicionarItem: adicionarItemFirebase,
-    alternarConclusaoItem: alternarConclusaoItemFirebase,
-    removerItem: removerItemFirebase,
+    adicionarItem,
+    alternarConclusaoItem,
+    removerItem,
     carregarItens
   } = useShoppingList();
 
-  const itensFiltrados = React.useMemo(() => {
+  const itensFiltrados = useMemo(() => {
     switch (filtroAtivo) {
       case 'pendentes':
         return itens.filter(item => !item.concluido);
@@ -34,18 +33,6 @@ export function Home() {
         return itens;
     }
   }, [itens, filtroAtivo]);
-
-  const adicionarItem = async (nome: string, categoria: CategoriaCompra) => {
-    await adicionarItemFirebase(nome, categoria);
-  };
-
-  const alternarConclusaoItem = (id: string) => {
-    alternarConclusaoItemFirebase(id);
-  };
-
-  const removerItem = (id: string) => {
-    removerItemFirebase(id);
-  };
 
   const compartilharLista = async () => {
     await CompartilharService.compartilharLista(itensFiltrados);
@@ -84,14 +71,3 @@ export function Home() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  lista: {
-    flex: 1,
-    paddingHorizontal: 16,
-  },
-});
