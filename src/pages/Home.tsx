@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { EstadoLista } from '../components/EstadoLista';
 import { FiltroLista } from '../components/FiltroLista';
@@ -12,7 +12,7 @@ import styles from './styles/Home.styles';
 
 export function Home() {
   const [filtroAtivo, setFiltroAtivo] = useState<FiltroTipo>('todos');
-  
+
   const {
     itens,
     loading,
@@ -34,13 +34,13 @@ export function Home() {
     }
   }, [itens, filtroAtivo]);
 
-  const compartilharLista = async () => {
+  const compartilharLista = useCallback(async () => {
     await CompartilharService.compartilharLista(itensFiltrados);
-  };
+  }, [itensFiltrados]);
 
-  const alterarFiltro = (filtro: FiltroTipo) => {
+  const alterarFiltro = useCallback((filtro: FiltroTipo) => {
     setFiltroAtivo(filtro);
-  };
+  }, []);
 
   return (
     <View style={styles.container}>
