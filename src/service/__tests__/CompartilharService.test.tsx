@@ -10,14 +10,9 @@ jest.mock('react-native', () => ({
 }));
 
 describe('CompartilharService', () => {
-  const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    mockConsoleError.mockRestore();
   });
 
   describe('compartilharLista', () => {

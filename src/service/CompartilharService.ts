@@ -35,8 +35,7 @@ export class CompartilharService {
       });
 
       return resultado.action !== Share.dismissedAction;
-    } catch (erro) {
-      console.error('Erro ao compartilhar:', erro);
+    } catch {
       return false;
     }
   }

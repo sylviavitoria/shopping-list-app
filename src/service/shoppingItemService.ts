@@ -32,7 +32,6 @@ export class ShoppingItemService {
 
             return itemRef.id;
         } catch (error) {
-            console.error('Erro ao adicionar item:', error);
             throw error;
         }
     }
@@ -53,7 +52,6 @@ export class ShoppingItemService {
                 dataCriacao: doc.data().dataCriacao?.toDate()
             }));
         } catch (error) {
-            console.error('Erro ao obter itens:', error);
             throw error;
         }
     }
@@ -70,7 +68,6 @@ export class ShoppingItemService {
             });
           }
         } catch (error) {
-          console.error('Erro ao alternar conclusão:', error);
           throw error;
         }
       }
@@ -79,7 +76,6 @@ export class ShoppingItemService {
         try {
             await deleteDoc(doc(db, COLLECTION_NAME, id));
         } catch (error) {
-            console.error('Erro ao remover item:', error);
             throw error;
         }
     }
@@ -102,7 +98,6 @@ export class ShoppingItemService {
                 dataCriacao: doc.data().dataCriacao?.toDate()
             }));
         } catch (error) {
-            console.error('Erro ao obter itens por categoria:', error);
             throw error;
         }
     }

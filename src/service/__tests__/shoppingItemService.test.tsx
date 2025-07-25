@@ -46,7 +46,6 @@ describe('ShoppingItemService', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockServerTimestamp.mockReturnValue({} as FieldValue);
-        jest.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
