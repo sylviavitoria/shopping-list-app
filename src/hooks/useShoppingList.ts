@@ -1,8 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ShoppingItem, ShoppingItemRequest } from '../models/ShoppingItem';
 import { ShoppingItemService } from '../service/shoppingItemService';
+import { showErrorToast } from '../utils/errorHandler';
 
-export function useShoppingList() {
+interface UseShoppingListReturn {
+  itens: ShoppingItem[];
+  loading: boolean;
+  error: string | null;
+  adicionarItem: (nome: string, categoria?: string) => Promise<boolean>;
+  alternarConclusaoItem: (id: string) => Promise<void>;
+  removerItem: (id: string) => Promise<void>;
+  obterItensPorCategoria: Record<string, ShoppingItem[]>;
+  carregarItens: () => Promise<void>;
+}
+
+export function useShoppingList(): UseShoppingListReturn {
   const [itens, setItens] = useState<ShoppingItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -11,21 +23,21 @@ export function useShoppingList() {
     carregarItens();
   }, []);
 
-  async function carregarItens() {
+  async function carregarItens(): Promise<void> {
     try {
       setLoading(true);
       setError(null);
       const itensFirebase = await ShoppingItemService.obterItens();
       setItens(itensFirebase as ShoppingItem[]);
-    } catch (err) {
-      console.error('Erro ao carregar itens:', err);
-      setError('Erro ao carregar a lista de compras.');
+    } catch {
+    showErrorToast('Erro ao carregar a lista de compras.');
+    setError('Erro ao carregar a lista de compras.');
     } finally {
       setLoading(false);
     }
   }
 
-  async function adicionarItem(nome: string, categoria?: string) {
+  async function adicionarItem(nome: string, categoria?: string): Promise<boolean> {
     if (nome.trim()) {
       try {
         setLoading(true);
@@ -37,12 +49,12 @@ export function useShoppingList() {
           categoria: categoria || 'Outros'
         };
 
-        const id = await ShoppingItemService.adicionarItem(novoItemRequest);
+        await ShoppingItemService.adicionarItem(novoItemRequest);
 
-        carregarItens();
+        await carregarItens();
         return true;
-      } catch (err) {
-        console.error('Erro ao adicionar item:', err);
+      } catch {
+        showErrorToast('Erro ao adicionar item à lista.');
         setError('Erro ao adicionar item à lista.');
         return false;
       } finally {
@@ -52,37 +64,37 @@ export function useShoppingList() {
     return false;
   }
 
-  async function alternarConclusaoItem(id: string) {
+  async function alternarConclusaoItem(id: string): Promise<void> {
     try {
       setLoading(true);
       setError(null);
       await ShoppingItemService.alternarConclusao(id);
 
-      carregarItens();
-    } catch (err) {
-      console.error('Erro ao alternar conclusão do item:', err);
+      await carregarItens();
+    } catch {
+      showErrorToast('Erro ao atualizar o item.');
       setError('Erro ao atualizar o item.');
     } finally {
       setLoading(false);
     }
   }
 
-  async function removerItem(id: string) {
+  async function removerItem(id: string): Promise<void> {
     try {
       setLoading(true);
       setError(null);
       await ShoppingItemService.removerItem(id);
 
-      carregarItens();
-    } catch (err) {
-      console.error('Erro ao remover item:', err);
+      await carregarItens();
+    } catch {
+      showErrorToast('Erro ao remover o item da lista.');
       setError('Erro ao remover o item da lista.');
     } finally {
       setLoading(false);
     }
   }
 
-  const obterItensPorCategoria = useMemo(() => {
+  const obterItensPorCategoria: Record<string, ShoppingItem[]> = useMemo(() => {
     const categorizados: Record<string, ShoppingItem[]> = {};
     itens.forEach(item => {
       const categoria = item.categoria || 'Outros';
@@ -91,7 +103,6 @@ export function useShoppingList() {
       }
       categorizados[categoria].push(item);
     });
-    
     return categorizados;
   }, [itens]);
 
