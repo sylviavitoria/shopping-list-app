@@ -211,7 +211,7 @@ describe('ItemLista Component', () => {
   });
 
   it('deve renderizar sem data quando não disponível', () => {
-    const itemSemData = { ...itemMock, dataCriacao: undefined as any };
+    const itemSemData: ShoppingItem = { ...itemMock, dataCriacao: undefined };
     const { getByText, queryByText } = render(
       <ItemLista 
         item={itemSemData} 

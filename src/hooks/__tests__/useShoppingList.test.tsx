@@ -48,12 +48,12 @@ describe('useShoppingList Hook', () => {
   });
 
   it('deve definir loading como true durante o carregamento de itens', async () => {
-    let resolvePromise: (value: any) => void;
-    const promise = new Promise((resolve) => {
+    let resolvePromise: (value: ShoppingItem[]) => void;
+    const promise = new Promise<ShoppingItem[]>((resolve) => {
       resolvePromise = resolve;
     });
 
-    mockShoppingItemService.obterItens.mockReturnValue(promise as any);
+    mockShoppingItemService.obterItens.mockReturnValue(promise);
 
     const { result } = renderHook(() => useShoppingList());
 

@@ -3,7 +3,7 @@ export interface ShoppingItem {
   nome: string;
   concluido: boolean;
   categoria?: string;
-  dataCriacao: Date;
+  dataCriacao?: Date;
 }
 
 export interface ShoppingItemRequest {

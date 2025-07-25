@@ -11,6 +11,17 @@ import {
     updateDoc,
     where
 } from 'firebase/firestore';
+
+import type {
+    CollectionReference,
+    DocumentData,
+    DocumentReference,
+    DocumentSnapshot,
+    FieldValue,
+    Query,
+    QuerySnapshot
+} from 'firebase/firestore';
+
 import { CategoriaCompra, ShoppingItemRequest } from '../../models/ShoppingItem';
 import { ShoppingItemService } from '../shoppingItemService';
 
@@ -34,8 +45,7 @@ const mockWhere = where as jest.MockedFunction<typeof where>;
 describe('ShoppingItemService', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        mockServerTimestamp.mockReturnValue({} as any);
-        
+        mockServerTimestamp.mockReturnValue({} as FieldValue);
         jest.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -51,18 +61,20 @@ describe('ShoppingItemService', () => {
                 categoria: 'Alimentos'
             };
 
-            const mockDocRef = { id: 'id123' };
-            mockAddDoc.mockResolvedValue(mockDocRef as any);
-            mockCollection.mockReturnValue({} as any);
+            const mockDocRef = { id: 'id123' } as DocumentReference<DocumentData>;
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+
+            mockAddDoc.mockResolvedValue(mockDocRef);
+            mockCollection.mockReturnValue(mockCollectionRef);
 
             const result = await ShoppingItemService.adicionarItem(mockItemRequest);
 
             expect(mockCollection).toHaveBeenCalledWith({}, 'shopping_items');
-            expect(mockAddDoc).toHaveBeenCalledWith({}, {
+            expect(mockAddDoc).toHaveBeenCalledWith(mockCollectionRef, {
                 nome: 'Arroz',
                 concluido: false,
                 categoria: 'Alimentos',
-                dataCriacao: {}
+                dataCriacao: {} as FieldValue
             });
             expect(result).toBe('id123');
         });
@@ -70,35 +82,38 @@ describe('ShoppingItemService', () => {
 
     describe('obterItens', () => {
         it('deve retornar lista de itens ordenados por data', async () => {
-            const mockData = [
-                {
-                    id: 'id1',
-                    data: () => ({
-                        nome: 'Arroz',
-                        concluido: false,
-                        categoria: 'Alimentos',
-                        dataCriacao: { toDate: () => new Date('2025-10-11') }
-                    })
-                },
-                {
-                    id: 'id2',
-                    data: () => ({
-                        nome: 'Leite',
-                        concluido: true,
-                        categoria: 'Laticínios',
-                        dataCriacao: { toDate: () => new Date('2025-10-12') }
-                    })
-                }
-            ];
+            const mockDocData = {
+                id: 'id1',
+                data: () => ({
+                    nome: 'Arroz',
+                    concluido: false,
+                    categoria: 'Alimentos',
+                    dataCriacao: { toDate: () => new Date('2025-10-11') }
+                })
+            } as DocumentSnapshot<DocumentData>;
+
+            const mockDocData2 = {
+                id: 'id2',
+                data: () => ({
+                    nome: 'Leite',
+                    concluido: true,
+                    categoria: 'Laticínios',
+                    dataCriacao: { toDate: () => new Date('2025-10-12') }
+                })
+            } as DocumentSnapshot<DocumentData>;
 
             const mockSnapshot = {
-                docs: mockData
-            };
+                docs: [mockDocData, mockDocData2]
+            } as QuerySnapshot<DocumentData>;
 
-            mockQuery.mockReturnValue({} as any);
-            mockCollection.mockReturnValue({} as any);
-            mockOrderBy.mockReturnValue({} as any);
-            mockGetDocs.mockResolvedValue(mockSnapshot as any);
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+            const mockQueryRef = {} as Query<DocumentData>;
+            const mockOrderByRef = {} as Query<DocumentData>;
+
+            mockCollection.mockReturnValue(mockCollectionRef);
+            mockOrderBy.mockReturnValue(mockOrderByRef);
+            mockQuery.mockReturnValue(mockQueryRef);
+            mockGetDocs.mockResolvedValue(mockSnapshot);
 
             const result = await ShoppingItemService.obterItens();
 
@@ -126,12 +141,16 @@ describe('ShoppingItemService', () => {
         });
 
         it('deve retornar lista vazia quando não há itens', async () => {
-            const mockSnapshot = { docs: [] };
+            const mockSnapshot = { docs: [] } as QuerySnapshot<DocumentData>;
 
-            mockQuery.mockReturnValue({} as any);
-            mockCollection.mockReturnValue({} as any);
-            mockOrderBy.mockReturnValue({} as any);
-            mockGetDocs.mockResolvedValue(mockSnapshot as any);
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+            const mockQueryRef = {} as Query<DocumentData>;
+            const mockOrderByRef = {} as Query<DocumentData>;
+
+            mockCollection.mockReturnValue(mockCollectionRef);
+            mockOrderBy.mockReturnValue(mockOrderByRef);
+            mockQuery.mockReturnValue(mockQueryRef);
+            mockGetDocs.mockResolvedValue(mockSnapshot);
 
             const result = await ShoppingItemService.obterItens();
 
@@ -144,38 +163,44 @@ describe('ShoppingItemService', () => {
             const mockDocSnap = {
                 exists: () => true,
                 data: () => ({ concluido: false })
-            };
+            } as DocumentSnapshot<DocumentData>;
 
-            mockDoc.mockReturnValue({} as any);
-            mockGetDoc.mockResolvedValue(mockDocSnap as any);
-            mockUpdateDoc.mockResolvedValue(undefined as any);
+            const mockDocRef = {} as DocumentReference<DocumentData>;
+
+            mockDoc.mockReturnValue(mockDocRef);
+            mockGetDoc.mockResolvedValue(mockDocSnap);
+            mockUpdateDoc.mockResolvedValue(undefined);
 
             await ShoppingItemService.alternarConclusao('test-id');
 
             expect(mockDoc).toHaveBeenCalledWith({}, 'shopping_items', 'test-id');
-            expect(mockGetDoc).toHaveBeenCalledWith({});
-            expect(mockUpdateDoc).toHaveBeenCalledWith({}, { concluido: true });
+            expect(mockGetDoc).toHaveBeenCalledWith(mockDocRef);
+            expect(mockUpdateDoc).toHaveBeenCalledWith(mockDocRef, { concluido: true });
         });
 
         it('deve alternar conclusão de true para false', async () => {
             const mockDocSnap = {
                 exists: () => true,
                 data: () => ({ concluido: true })
-            };
+            } as DocumentSnapshot<DocumentData>;
 
-            mockDoc.mockReturnValue({} as any);
-            mockGetDoc.mockResolvedValue(mockDocSnap as any);
-            mockUpdateDoc.mockResolvedValue(undefined as any);
+            const mockDocRef = {} as DocumentReference<DocumentData>;
+
+            mockDoc.mockReturnValue(mockDocRef);
+            mockGetDoc.mockResolvedValue(mockDocSnap);
+            mockUpdateDoc.mockResolvedValue(undefined);
 
             await ShoppingItemService.alternarConclusao('test-id');
 
-            expect(mockUpdateDoc).toHaveBeenCalledWith({}, { concluido: false });
+            expect(mockUpdateDoc).toHaveBeenCalledWith(mockDocRef, { concluido: false });
         });
 
         it('deve lançar erro quando getDoc falha', async () => {
             const mockError = new Error('Firebase error');
 
-            mockDoc.mockReturnValue({} as any);
+            const mockDocRef = {} as DocumentReference<DocumentData>;
+
+            mockDoc.mockReturnValue(mockDocRef);
             mockGetDoc.mockRejectedValue(mockError);
 
             await expect(ShoppingItemService.alternarConclusao('test-id'))
@@ -185,19 +210,23 @@ describe('ShoppingItemService', () => {
 
     describe('removerItem', () => {
         it('deve remover item com sucesso', async () => {
-            mockDoc.mockReturnValue({} as any);
-            mockDeleteDoc.mockResolvedValue(undefined as any);
+            const mockDocRef = {} as DocumentReference<DocumentData>;
+
+            mockDoc.mockReturnValue(mockDocRef);
+            mockDeleteDoc.mockResolvedValue(undefined);
 
             await ShoppingItemService.removerItem('test-id');
 
             expect(mockDoc).toHaveBeenCalledWith({}, 'shopping_items', 'test-id');
-            expect(mockDeleteDoc).toHaveBeenCalledWith({});
+            expect(mockDeleteDoc).toHaveBeenCalledWith(mockDocRef);
         });
 
         it('deve lançar erro quando deleteDoc falha', async () => {
             const mockError = new Error('Delete failed');
 
-            mockDoc.mockReturnValue({} as any);
+            const mockDocRef = {} as DocumentReference<DocumentData>;
+
+            mockDoc.mockReturnValue(mockDocRef);
             mockDeleteDoc.mockRejectedValue(mockError);
 
             await expect(ShoppingItemService.removerItem('test-id'))
@@ -209,25 +238,28 @@ describe('ShoppingItemService', () => {
         it('deve retornar itens filtrados por categoria', async () => {
             const categoria: CategoriaCompra = 'Alimentos';
 
-            const mockData = [
-                {
-                    id: 'id1',
-                    data: () => ({
-                        nome: 'Arroz',
-                        concluido: false,
-                        categoria: 'Alimentos',
-                        dataCriacao: { toDate: () => new Date('2025-10-11') }
-                    })
-                }
-            ];
+            const mockDocData = {
+                id: 'id1',
+                data: () => ({
+                    nome: 'Arroz',
+                    concluido: false,
+                    categoria: 'Alimentos',
+                    dataCriacao: { toDate: () => new Date('2025-10-11') }
+                })
+            } as DocumentSnapshot<DocumentData>;
 
-            const mockSnapshot = { docs: mockData };
+            const mockSnapshot = { docs: [mockDocData] } as QuerySnapshot<DocumentData>;
 
-            mockQuery.mockReturnValue({} as any);
-            mockCollection.mockReturnValue({} as any);
-            mockWhere.mockReturnValue({} as any);
-            mockOrderBy.mockReturnValue({} as any);
-            mockGetDocs.mockResolvedValue(mockSnapshot as any);
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+            const mockQueryRef = {} as Query<DocumentData>;
+            const mockWhereRef = {} as Query<DocumentData>;
+            const mockOrderByRef = {} as Query<DocumentData>;
+
+            mockCollection.mockReturnValue(mockCollectionRef);
+            mockWhere.mockReturnValue(mockWhereRef);
+            mockOrderBy.mockReturnValue(mockOrderByRef);
+            mockQuery.mockReturnValue(mockQueryRef);
+            mockGetDocs.mockResolvedValue(mockSnapshot);
 
             const result = await ShoppingItemService.obterItensPorCategoria(categoria);
 
@@ -250,13 +282,18 @@ describe('ShoppingItemService', () => {
 
         it('deve retornar lista vazia quando não há itens da categoria', async () => {
             const categoria: CategoriaCompra = 'Bebidas';
-            const mockSnapshot = { docs: [] };
+            const mockSnapshot = { docs: [] } as QuerySnapshot<DocumentData>;
 
-            mockQuery.mockReturnValue({} as any);
-            mockCollection.mockReturnValue({} as any);
-            mockWhere.mockReturnValue({} as any);
-            mockOrderBy.mockReturnValue({} as any);
-            mockGetDocs.mockResolvedValue(mockSnapshot as any);
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+            const mockQueryRef = {} as Query<DocumentData>;
+            const mockWhereRef = {} as Query<DocumentData>;
+            const mockOrderByRef = {} as Query<DocumentData>;
+
+            mockCollection.mockReturnValue(mockCollectionRef);
+            mockWhere.mockReturnValue(mockWhereRef);
+            mockOrderBy.mockReturnValue(mockOrderByRef);
+            mockQuery.mockReturnValue(mockQueryRef);
+            mockGetDocs.mockResolvedValue(mockSnapshot);
 
             const result = await ShoppingItemService.obterItensPorCategoria(categoria);
 
@@ -267,10 +304,15 @@ describe('ShoppingItemService', () => {
             const categoria: CategoriaCompra = 'Hortifruti';
             const mockError = new Error('Query failed');
 
-            mockQuery.mockReturnValue({} as any);
-            mockCollection.mockReturnValue({} as any);
-            mockWhere.mockReturnValue({} as any);
-            mockOrderBy.mockReturnValue({} as any);
+            const mockCollectionRef = {} as CollectionReference<DocumentData>;
+            const mockQueryRef = {} as Query<DocumentData>;
+            const mockWhereRef = {} as Query<DocumentData>;
+            const mockOrderByRef = {} as Query<DocumentData>;
+
+            mockCollection.mockReturnValue(mockCollectionRef);
+            mockWhere.mockReturnValue(mockWhereRef);
+            mockOrderBy.mockReturnValue(mockOrderByRef);
+            mockQuery.mockReturnValue(mockQueryRef);
             mockGetDocs.mockRejectedValue(mockError);
 
             await expect(ShoppingItemService.obterItensPorCategoria(categoria))

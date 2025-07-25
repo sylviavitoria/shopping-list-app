@@ -4,8 +4,8 @@ import { ShoppingItem } from '../../models/ShoppingItem';
 import { ListaAgrupadaPorCategoria } from '../ListaAgrupadaPorCategoria';
 
 describe('ListaAgrupadaPorCategoria Component', () => {
-  const mockOnToggleConclusao = jest.fn();
-  const mockOnRemover = jest.fn();
+  const mockOnToggleConclusao: jest.Mock<void, [string]> = jest.fn();
+  const mockOnRemover: jest.Mock<void, [string]> = jest.fn();
 
   beforeEach(() => {
     mockOnToggleConclusao.mockClear();
@@ -163,7 +163,7 @@ describe('ListaAgrupadaPorCategoria Component', () => {
   });
 
   it('deve usar keyExtractor corretamente', () => {
-    const itensComIds = [
+    const itensComIds: ShoppingItem[] = [
       {
         id: 'unique-id-1',
         nome: 'Item Teste',
@@ -185,7 +185,7 @@ describe('ListaAgrupadaPorCategoria Component', () => {
   });
 
   it('deve lidar com categorias especiais corretamente', () => {
-    const itensEspeciais: ShoppingItem[] = [
+    const itensEspeciais: (Omit<ShoppingItem, 'categoria'> & { categoria: string | null })[] = [
       {
         id: '1',
         nome: 'Item com categoria vazia',
@@ -197,14 +197,14 @@ describe('ListaAgrupadaPorCategoria Component', () => {
         id: '2',
         nome: 'Item com categoria null',
         concluido: false,
-        categoria: null as any,
+        categoria: null,
         dataCriacao: new Date()
       }
     ];
 
     const { getByText } = render(
       <ListaAgrupadaPorCategoria
-        itens={itensEspeciais}
+        itens={itensEspeciais as ShoppingItem[]}
         onToggleConclusao={mockOnToggleConclusao}
         onRemover={mockOnRemover}
       />
