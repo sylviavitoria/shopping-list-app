@@ -189,6 +189,39 @@ npm run test:coverage  # Gera relatório de cobertura
 
 ---
 
+## 📁 Configuração do Firebase
+
+O projeto utiliza o **Firebase Firestore** como banco de dados em tempo real. Para que o app funcione corretamente, é necessário configurar as credenciais do Firebase.
+
+### 1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/)
+
+* Acesse o console do Firebase e crie um novo projeto
+* Atualize a página
+* Registre um novo app (plataforma: Web) na parte de "Comece adicionando o Firebase ao seu app"
+* Copie as credenciais de configuração fornecidas para o .env
+
+### 2. Crie um arquivo `.env` na raiz do projeto
+
+Adicione suas credenciais da seguinte forma:
+
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=sua_API_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=seu-app.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=seu-app
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=seu-app.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=seu_messaging_sender_id
+EXPO_PUBLIC_FIREBASE_APP_ID=1:1234567890:web:abc123def456
+EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID=G-seu_measurement
+```
+
+> ⚠️ O prefixo `EXPO_PUBLIC_` é obrigatório para que as variáveis estejam disponíveis no app.
+
+### 3. Firebase no código
+
+A configuração do Firebase no código está localizada em `src/service/config/firebase.ts`, utilizando as variáveis do arquivo `.env`.
+
+---
+
 # 🌬️ Como Executar
 
 ## 🚀 Como Executar o Projeto
@@ -197,6 +230,7 @@ npm run test:coverage  # Gera relatório de cobertura
 - Node.js (versão 18 ou superior)
 - npm ou yarn
 - Expo CLI
+- Configuração do Firebase e do .env
 - Conta no [expo.dev](https://expo.dev)(para gerar APK)
 
 ---

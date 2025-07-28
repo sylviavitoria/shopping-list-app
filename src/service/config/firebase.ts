@@ -2,18 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCf8lUcoUpGh9YXewW7mtgG6qcWoJfp7AU",
-  authDomain: "shopping-list-app-36a49.firebaseapp.com",
-  projectId: "shopping-list-app-36a49",
-  storageBucket: "shopping-list-app-36a49.firebasestorage.app",
-  messagingSenderId: "173830058165",
-  appId: "1:173830058165:web:501f90ed28f09284968efc",
-  measurementId: "G-JW3QG5HLS2"
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
- 
+
 export { db };
 
